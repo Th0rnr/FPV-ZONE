@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="sv">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Militär Drönar-karta Sverige</title>
+    <link rel="stylesheet" href="main.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <!-- Huvudmeny -->
+      <nav id="main-nav">
+        <div class="nav-container">
+          <h1>Militär Dronekarta</h1>
+          <div class="nav-controls">
+            <button id="toggle-zones" class="nav-btn active">Visa Zoner</button>
+            <button id="toggle-notam" class="nav-btn">NOTAM</button>
+            <button id="toggle-weather" class="nav-btn">Väder</button>
+            <button id="toggle-tactical" class="nav-btn">Taktisk Vy</button>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Sidopanel för information -->
+      <aside id="info-panel">
+        <div class="panel-header">
+          <h2>Flyginformation</h2>
+          <button id="close-panel" class="close-btn">&times;</button>
+        </div>
+        <div class="panel-content">
+          <div id="zone-info" class="info-section">
+            <h3>Zondetaljer</h3>
+            <div id="zone-details"></div>
+          </div>
+          <div id="flight-rules" class="info-section">
+            <h3>Flygregler</h3>
+            <ul id="rules-list"></ul>
+          </div>
+          <div id="contacts" class="info-section">
+            <h3>Kontakter</h3>
+            <div id="contact-list"></div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Kartcontainer -->
+      <main id="map-container">
+        <div id="map"></div>
+
+        <!-- Kartverktyg -->
+        <div id="map-tools">
+          <div class="tool-group">
+            <button id="zoom-in" class="tool-btn" title="Zooma in">+</button>
+            <button id="zoom-out" class="tool-btn" title="Zooma ut">-</button>
+            <button id="center-map" class="tool-btn" title="Centrera">⌖</button>
+          </div>
+          <div class="tool-group">
+            <button id="measure-distance" class="tool-btn" title="Mät avstånd">
+              📏
+            </button>
+            <button id="draw-area" class="tool-btn" title="Rita område">
+              ✏️
+            </button>
+            <button id="add-marker" class="tool-btn" title="Lägg till markör">
+              📍
+            </button>
+          </div>
+        </div>
+
+        <!-- Koordinatvisning -->
+        <div id="coordinates">
+          <span id="lat-lon">Lat: 0.000, Lon: 0.000</span>
+          <span id="mgrs">MGRS: </span>
+        </div>
+      </main>
+
+      <!-- Legend -->
+      <div id="legend">
+        <h3>Teckenförklaring</h3>
+        <div class="legend-items">
+          <div class="legend-item">
+            <span class="legend-color restricted"></span>
+            <span>Förbjudet område</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color danger"></span>
+            <span>Riskområde</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color military"></span>
+            <span>Militärt område</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color controlled"></span>
+            <span>Kontrollerad luftrum</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color temporary"></span>
+            <span>Tillfälligt restrikterat</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statusfält -->
+      <footer id="status-bar">
+        <div class="status-left">
+          <span id="connection-status" class="status-item">
+            <span class="status-indicator online"></span>
+            Online
+          </span>
+          <span id="last-update" class="status-item">
+            Uppdaterad: <time>--:--</time>
+          </span>
+        </div>
+        <div class="status-right">
+          <span id="altitude-info" class="status-item">
+            Max höjd: <span id="max-altitude">120m</span>
+          </span>
+          <span id="wind-info" class="status-item">
+            Vind: <span id="wind-speed">-- m/s</span>
+          </span>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Modaler -->
+    <div id="modal-overlay" class="modal-overlay">
+      <div id="notam-modal" class="modal">
+        <div class="modal-header">
+          <h2>NOTAM - Notice to Airmen</h2>
+          <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-content">
+          <div id="notam-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Laddningsindikator -->
+    <div id="loading" class="loading-overlay">
+      <div class="spinner"></div>
+      <p>Laddar kartdata...</p>
+    </div>
+
+    <!-- Skript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
